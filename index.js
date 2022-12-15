@@ -50,48 +50,30 @@ app.get("/api/wx_openid", async (req, res) => {
   }
 });
 
-app.post("/api/chat", async (req, res) => {
-  const { content } = req.body;
-  // const token = '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'
-  const token = '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'
+app.get("/api/chat", async (req, res) => {
+  const { content } = req.query;
+  const token = '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'
   const params = {  
     model: 'text-davinci-003',  
     prompt: content,  
     max_tokens: 2000,  
     temperature: 0.5  
   }
-  const data = await axios.post('https://api.openai.com/v1/completions', params, {  
+  const result = await axios.post('https://api.openai.com/v1/completions', params, {  
     timeout: 300000,  
     headers: { Authorization: `Bearer ${token}` }  
   })
+  console.log('1---', result.data.choices[0])
   res.send({
     code: 0,
-    data
-  });
-})
-app.post("/api/login", async (req, res) => {
-  const { password, mobile, loginType = 0 } = req.body;
-  
-  const data = await axios.post('https://fengxian-beta.qjdchina.com/partner/user/login', { password, mobile, loginType }, {  
-    timeout: 300000,
-  })
-  res.send({
-    code: 0,
-    data
-  });
-})
-
-app.post("/api/test", async (req, res) => {
-  res.send({
-    code: 0,
-    data: 'test成功'
+    data: result.data.choices[0].text
   });
 })
 
 const port = process.env.PORT || 80;
 
 async function bootstrap() {
-  await initDB();
+  // await initDB();
   app.listen(port, () => {
     console.log("启动成功", port);
   });
