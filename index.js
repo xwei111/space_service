@@ -70,8 +70,6 @@ app.post("/api/chat", async (req, res) => {
   });
 })
 
-test()
-
 const port = process.env.PORT || 80;
 
 async function bootstrap() {
