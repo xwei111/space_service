@@ -70,6 +70,13 @@ app.post("/api/chat", async (req, res) => {
   });
 })
 
+app.post("/api/test", async (req, res) => {
+  res.send({
+    code: 0,
+    data: 'test成功'
+  });
+})
+
 const port = process.env.PORT || 80;
 
 async function bootstrap() {
