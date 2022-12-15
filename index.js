@@ -2,6 +2,7 @@ const path = require("path");
 const express = require("express");
 const cors = require("cors");
 const morgan = require("morgan");
+const axios = require('axios')
 const { init: initDB, Counter } = require("./db");
 
 const logger = morgan("tiny");
@@ -48,6 +49,25 @@ app.get("/api/wx_openid", async (req, res) => {
     res.send(req.headers["x-wx-openid"]);
   }
 });
+
+app.post("/api/chat", async (req, res) => {
+  const { content } = req.body;
+  const token = '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'
+  const params = {  
+    model: 'text-davinci-003',  
+    prompt: content,  
+    max_tokens: 2000,  
+    temperature: 0.5  
+  }
+  const data = await axios.post('https://api.openai.com/v1/completions', params, {  
+    timeout: 300000,  
+    headers: { Authorization: `Bearer ${token}` }  
+  })
+  res.send({
+    code: 0,
+    data
+  });
+})
 
 const port = process.env.PORT || 80;
 
