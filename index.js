@@ -52,7 +52,6 @@ app.get("/api/wx_openid", async (req, res) => {
 
 app.post("/api/chat", async (req, res) => {
   const { content } = req.body;
-  // const token = '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'
   const token = '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'
   const params = {  
     model: 'text-davinci-003',  
