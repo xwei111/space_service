@@ -69,6 +69,17 @@ app.post("/api/chat", async (req, res) => {
     data
   });
 })
+app.post("/api/login", async (req, res) => {
+  const { password, mobile, loginType = 0 } = req.body;
+  
+  const data = await axios.post('https://fengxian-beta.qjdchina.com/partner/user/login', { password, mobile, loginType }, {  
+    timeout: 300000,
+  })
+  res.send({
+    code: 0,
+    data
+  });
+})
 
 app.post("/api/test", async (req, res) => {
   res.send({
